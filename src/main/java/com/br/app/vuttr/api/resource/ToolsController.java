@@ -3,8 +3,10 @@ package com.br.app.vuttr.api.resource;
 import com.br.app.vuttr.api.dto.ToolsDTO;
 import com.br.app.vuttr.domain.Tools;
 import com.br.app.vuttr.service.ToolsServiceCustom;
+import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -56,6 +58,11 @@ public class ToolsController {
 
             return mapper.map(tools, ToolsDTO.class);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Tools>> findByTag(@RequestParam String tag){
+        return ResponseEntity.ok(service.findByTag(tag));
     }
 
 }
